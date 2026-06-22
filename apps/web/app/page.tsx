@@ -4,11 +4,12 @@ import { Button } from '@/components/button'
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-8 px-6">
-      <div className="max-w-2xl text-center">
-        <p className="text-sm font-medium text-muted-foreground">
-          Life-growth civilization game
-        </p>
+    <div className="page-bg bg-landing">
+      <main className="flex min-h-screen flex-col items-center justify-center gap-8 px-6">
+        <div className="max-w-2xl text-center">
+          <p className="text-sm font-medium text-muted-foreground">
+            Life-growth civilization game
+          </p>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
           Dream Builder
         </h1>
@@ -39,7 +40,8 @@ export default function Page() {
         <code className="rounded bg-muted px-1.5 py-0.5">npm run dev:mobile</code>{' '}
         from the project root to launch the Expo app.
       </p>
-    </main>
+      </main>
+    </div>
   )
 }
 
