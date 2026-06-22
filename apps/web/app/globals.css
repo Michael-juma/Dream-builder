@@ -167,3 +167,14 @@
     @apply font-sans;
   }
 }
+
+.dream-sky {
+  background:
+    radial-gradient(circle at 20% 20%, oklch(0.55 0.18 280 / 35%), transparent 45%),
+    radial-gradient(circle at 80% 10%, oklch(0.62 0.14 250 / 30%), transparent 40%),
+    linear-gradient(180deg, oklch(0.22 0.08 270) 0%, oklch(0.14 0.06 260) 55%, oklch(0.1 0.04 250) 100%);
+}
+
+.dream-cell {
+  backdrop-filter: blur(2px);
+}

@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Dream Builder",
+    "slug": "dream-builder",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "dreambuilder",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dreambuilder.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1a1a2e"
+      },
+      "package": "com.dreambuilder.app"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
