@@ -17,6 +17,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
@@ -60,6 +61,28 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
     saveGameState(state)
   }, [state, ready])
+
+  useEffect(() => {
+    if (!ready) {
+      return
+    }
+
+    const audio = new Audio('/music.wav')
+    audio.loop = true
+    audio.volume = 0.5
+    audio.play().catch(() => {
+      const resume = () => {
+        audio.play().catch(() => {})
+        document.body.removeEventListener('click', resume)
+      }
+      document.body.addEventListener('click', resume, { once: true })
+    })
+
+    return () => {
+      audio.pause()
+      audio.currentTime = 0
+    }
+  }, [ready])
 
   const finishOnboarding = useCallback(
     (input: {

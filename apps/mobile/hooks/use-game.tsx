@@ -16,9 +16,11 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av'
 
 import { loadGameState, resetGameState, saveGameState } from '../lib/storage'
 
@@ -47,6 +49,49 @@ const GameContext = createContext<GameContextValue | null>(null)
 export function GameProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<GameState>(() => createInitialState())
   const [ready, setReady] = useState(false)
+
+  const backgroundMusic = useRef<Audio.Sound | null>(null)
+
+  useEffect(() => {
+    let active = true
+
+    async function loadMusic() {
+      try {
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: false,
+          interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+          playsInSilentModeIOS: true,
+          shouldDuckAndroid: true,
+          interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+          staysActiveInBackground: false,
+          playThroughEarpieceAndroid: false,
+        })
+
+        const sound = new Audio.Sound()
+        await sound.loadAsync(require('../assets/music.wav'), {
+          shouldPlay: true,
+          isLooping: true,
+          volume: 0.5,
+        })
+
+        if (active) {
+          backgroundMusic.current = sound
+        } else {
+          await sound.unloadAsync()
+        }
+      } catch (error) {
+        console.warn('Unable to play background music', error)
+      }
+    }
+
+    void loadMusic()
+
+    return () => {
+      active = false
+      void backgroundMusic.current?.unloadAsync()
+      backgroundMusic.current = null
+    }
+  }, [])
 
   useEffect(() => {
     loadGameState().then((loaded) => {

@@ -102,18 +102,20 @@ export function GameShell() {
 
       {tab === 'home' && (
         <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="dream-sky rounded-2xl border p-6 shadow-sm">
-            <p className="text-sm text-white/70">The Cradle Island</p>
-            <h2 className="mt-1 text-2xl font-semibold text-white">
+          <div className="dream-sky dream-hero rounded-2xl border p-6 shadow-sm overflow-hidden">
+            <div aria-hidden className="dream-glow" />
+            <p className="relative z-10 text-sm text-white/70">The Cradle Island</p>
+            <h2 className="relative z-10 mt-1 text-2xl font-semibold text-white">
               Your civilization grows with you
             </h2>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {state.buildings.map((building) => {
+            <div className="relative z-10 mt-6 grid gap-3 sm:grid-cols-2">
+              {state.buildings.map((building, idx) => {
                 const meta = BUILDING_CATALOG[building.id]
                 return (
                   <div
                     key={building.id}
-                    className="rounded-xl border border-white/15 bg-white/10 p-4 text-white backdrop-blur-sm"
+                    className="dream-card shimmer border rounded-xl border-white/15 bg-white/10 p-4 text-white backdrop-blur-sm"
+                    style={{ ['--d' as any]: `${idx * 70}ms` }}
                   >
                     <p className="text-2xl">{meta.emoji}</p>
                     <p className="mt-2 font-medium">{meta.name}</p>
@@ -125,23 +127,32 @@ export function GameShell() {
           </div>
 
           <div className="space-y-4">
-            <div className="rounded-2xl border bg-card p-5 shadow-sm">
+            <div className="dream-reveal rounded-2xl border bg-card p-5 shadow-sm" style={{ ['--d' as any]: '0ms' }}>
               <p className="text-sm text-muted-foreground">World Tree</p>
               <p className="mt-1 text-4xl">🌳</p>
               <p className="mt-2 text-lg font-semibold">{treeStage?.label}</p>
               <p className="text-sm text-muted-foreground">{treeStage?.requirement}</p>
             </div>
-            <div className="rounded-2xl border bg-card p-5 shadow-sm">
+            <div className="dream-reveal rounded-2xl border bg-card p-5 shadow-sm" style={{ ['--d' as any]: '90ms' }}>
               <p className="text-sm text-muted-foreground">Journey summary</p>
               <ul className="mt-3 space-y-2 text-sm">
-                <li>{summary.completedGoals} goals completed</li>
-                <li>{summary.buildings} buildings on The Cradle</li>
-                <li>{summary.unlockedCitizens} citizens met</li>
-                <li>{summary.achievements} achievements earned</li>
+                <li className="dream-pulse">{summary.completedGoals} goals completed</li>
+                <li className="dream-pulse" style={{ animationDelay: '70ms' }}>
+                  {summary.buildings} buildings on The Cradle
+                </li>
+                <li className="dream-pulse" style={{ animationDelay: '140ms' }}>
+                  {summary.unlockedCitizens} citizens met
+                </li>
+                <li className="dream-pulse" style={{ animationDelay: '210ms' }}>
+                  {summary.achievements} achievements earned
+                </li>
               </ul>
             </div>
             {state.profile.firstDreamChosen && (
-              <div className="rounded-2xl border bg-card p-5 shadow-sm">
+              <div
+                className="dream-reveal rounded-2xl border bg-card p-5 shadow-sm"
+                style={{ ['--d' as any]: '180ms' }}
+              >
                 <p className="text-sm text-muted-foreground">First dream</p>
                 <p className="mt-1 font-medium">{state.profile.firstDreamChosen}</p>
               </div>
